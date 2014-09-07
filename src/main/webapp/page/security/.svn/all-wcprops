@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/mbu/!svn/ver/15442/17173app/server/project/advertisingManagement/adManagement-web/src/main/webapp/page/security
+END
+userEdit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/mbu/!svn/ver/16141/17173app/server/project/advertisingManagement/adManagement-web/src/main/webapp/page/security/userEdit.jsp
+END
+userAdd.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/mbu/!svn/ver/16141/17173app/server/project/advertisingManagement/adManagement-web/src/main/webapp/page/security/userAdd.jsp
+END
+userList.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/mbu/!svn/ver/16141/17173app/server/project/advertisingManagement/adManagement-web/src/main/webapp/page/security/userList.jsp
+END
+pwdEdit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/mbu/!svn/ver/15310/17173app/server/project/advertisingManagement/adManagement-web/src/main/webapp/page/security/pwdEdit.jsp
+END
+rolesList.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/mbu/!svn/ver/16152/17173app/server/project/advertisingManagement/adManagement-web/src/main/webapp/page/security/rolesList.jsp
+END
+moduleList.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/mbu/!svn/ver/16141/17173app/server/project/advertisingManagement/adManagement-web/src/main/webapp/page/security/moduleList.jsp
+END

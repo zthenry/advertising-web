@@ -1,0 +1,121 @@
+<%@ page language="java" pageEncoding="utf-8" contentType="text/html;charset=utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>操作项列表</title>
+<jsp:include page="/page/base.jsp"></jsp:include>
+<script type="text/javascript">
+$(document).ready(function() {
+    
+});
+function setInput(id, name, orderNum){
+	$("#moduleModal #id").val(id);
+	$("#moduleModal #name").val(name);
+	$("#moduleModal #orderNum").val(orderNum);
+}
+function setInputO(id, name, url, moduleId){
+	$("#operatinsModal #id").val(id);
+	$("#operatinsModal #name").val(name);
+	$("#operatinsModal #url").val(url);
+	$("#operatinsModal #moduleId").val(moduleId);
+}
+var real_del=function(id){
+	self.location.href += "${contextPath }/operations/delete?id="+id;
+}
+</script>
+</head>
+
+<body>
+<div class="content">
+        <ul class="breadcrumb">
+            <li>权限管理 》 操作项管理</li>
+        </ul>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="btn-toolbar">
+				    	<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#moduleModal' onclick="setInput(null, '', null)">新增模块</button>
+				  		<div class="btn-group"></div>
+				</div>
+				<c:forEach var="manageModule" items="${manageModuleList}" varStatus="status">
+					<div class="block">
+						<table class="table table-hover" border="0">
+							<tr bgcolor="#EEEEEE">
+							<td align="center" width="80%" colspan="2">${manageModule.name }
+								<a class="btn btn-mini" data-toggle='modal' data-target='#operatinsModal' onclick="setInputO(null, '', '', ${manageModule.id })">新增操作项</a></td>
+							<td align="center" >
+								<a class="btn btn-mini" data-toggle='modal' data-target='#moduleModal' onclick="setInput(${manageModule.id }, '${manageModule.name }', ${manageModule.orderNum })">编辑</a>
+								<a class="btn btn-danger btn-mini" href="${contextPath }/manageModule/delete?id=${manageModule.id }" onclick="return confirm('你确定吗?')">删除</a>
+							</td>
+							</tr>
+							    <c:forEach var="operations" items="${manageModule.operationsList}" varStatus="status1">
+									<tr>
+										<td align="center" width="40%"><span class="tablecontent">${operations.name }</span></td>
+										<td align="center" width="40%"><span class="tablecontent">${operations.url }</span></td>
+										<td align="center" width="20%">
+										<a class="btn btn-mini" data-toggle='modal' data-target='#operatinsModal' onclick="setInputO(${operations.id }, '${operations.name }', '${operations.url }', ${manageModule.id })">编辑</a>
+										<a class="btn btn-danger btn-mini" href="javascript:;" onclick="del('${operations.id }')" >删除</a>
+										</td>
+									</tr>
+								</c:forEach>
+							</table>
+					</div>
+				</c:forEach>
+            </div>
+        </div>
+    </div>
+<div id="moduleModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">添加模块</h3>
+  </div>
+  <form action="${contextPath }/manageModule/edit" method="post">
+  <input type="hidden" name="id" id="id"/>
+  <div class="modal-body">
+    <table id="sample-table-1" class="table">
+        <tr>
+	      <td>模块名称</td>
+	      <td><input type="text" name="name" id="name" required/>&nbsp;</td>
+	    </tr>
+        <tr>
+	      <td>排序</td>
+	      <td><input type="text" name="orderNum" id="orderNum" required/>&nbsp;</td>
+	    </tr>
+      </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+    <button class="btn btn-primary">保存</button>
+  </div>
+  </form>
+</div>
+
+<div id="operatinsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">编辑模块</h3>
+  </div>
+  <form action="${contextPath }/operations/edit" method="post">
+  <input type="hidden" name="id" id="id"/>
+  <input type="hidden" name="moduleId" id="moduleId"/>
+  <div class="modal-body">
+    <table id="sample-table-1" class="table">
+        <tr>
+	      <td>操作项名称</td>
+	      <td><input type="text" name="name" id="name" required/>&nbsp;</td>
+	    </tr>
+        <tr>
+	      <td>URL</td>
+	      <td><input type="text" name="url" id="url" required/>&nbsp;</td>
+	    </tr>
+      </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+    <button class="btn btn-primary">保存</button>
+  </div>
+  </form>
+</div>
+<jsp:include page="/page/confirm.jsp"></jsp:include>
+</body>
+</html>

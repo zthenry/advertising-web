@@ -1,0 +1,101 @@
+<%@ page language="java" pageEncoding="utf-8" contentType="text/html;charset=utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>广告列表</title>
+<jsp:include page="/page/base.jsp"></jsp:include>
+<script type="text/javascript">
+$(document).ready(function() {
+	tishi();
+});
+function updateStatus(id, status){
+	$.ajax({
+		url:"${contextPath}/ad/updateStatus",
+		type:'get',
+		data:{id : id, status : status},
+		dataType:'json',
+		success:function(data){
+			alert(data.msg);
+			window.parent.frames.mainFrame.location.reload();
+		}
+	});
+}
+function tishi(){
+	if('${param.flag}'=='0'){
+		Boxy.alert('操作失败');
+	}
+	if('${param.flag}'=='1'){
+		Boxy.alert('操作成功');
+	}		
+}
+</script>
+
+</head>
+
+<body>
+<div class="content">
+        
+        <ul class="breadcrumb">
+            <li>广告管理 》 广告信息管理 </li>
+        </ul>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    
+				<div class="btn-toolbar">
+					<button class="btn btn-primary" onclick="location.href='${contextPath }/ad/toEdit&curPage=${param.curPage}'"><i class="icon-plus"></i> 创建广告</button>
+				</div>
+				<div class="well">
+					<table id="sample-table-1" class="table table-bordered table-hover">
+						<tr>
+					        <td width="25%" align="center" bgcolor="#EEEEEE"><span class="tabletitle">广告名称</span></td>
+					        <td width="15%" align="center" bgcolor="#EEEEEE"><span class="tabletitle">广告语</span></td>
+					        <td width="15%" align="center" bgcolor="#EEEEEE"><span class="tabletitle">图片</span></td>
+					        <td width="15%" align="center" bgcolor="#EEEEEE"><span class="tabletitle">创建时间</span></td>
+					        <td width="15%" align="center" bgcolor="#EEEEEE"><span class="tabletitle">状态</span></td>
+					        <td width="15%" align="center" bgcolor="#EEEEEE"><span class="tabletitle">操作</span></td>
+					    </tr>
+					    <c:forEach var="ad" items="${adList}" varStatus="status">
+							<tr>
+								<td align="center">${ad.adName }</td>
+								<td align="center">${ad.adWord }</td>
+								<td align="center"><img src=""/></td>
+								<td align="center"><fmt:formatDate value="${ad.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								<td align="center">
+									<c:if test="${ad.status==0 }">停用</c:if>
+									<c:if test="${ad.status==1 }">启用</c:if>
+								</td>
+								<td align="center">
+									<c:if test="${ad.status==0 }">
+										<a class="btn btn-mini" href="${contextPath}/ad/updateStatus?id=${ad.id }&status=1&curPage=${param.curPage}">启用</a>
+									</c:if>
+									<c:if test="${ad.status==1 }">
+										<a class="btn btn-mini" href="${contextPath}/ad/updateStatus?id=${ad.id }&status=1&curPage=${param.curPage}">停用</a>
+									</c:if>
+									<button class="btn btn-mini" onclick="location.href='${contextPath }/ad/toEdit?id=${ad.id }&curPage=${param.curPage}'">编辑</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+					<div id="example"></div>
+				</div>
+            </div>
+        </div>
+    </div>
+    <script type='text/javascript'>
+        var options = {
+            currentPage: ${page.curPage},
+            totalPages: ${page.pageCount},
+	    	numberOfPages:${page.pageSize},
+	    	alignment:'center',
+	    	pageUrl: function(type, page, current){
+				return "${contextPath}/ad/list?curPage="+page;  
+            }
+        }
+        
+        $('#example').bootstrapPaginator(options);
+    </script><span style="font-family:'sans serif, tahoma, verdana, helvetica';"><span style="white-space:normal;"> </span></span>
+</body>
+</html>

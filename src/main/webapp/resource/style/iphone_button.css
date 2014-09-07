@@ -1,0 +1,36 @@
+*{margin:0;padding:0;}
+body{font-size:14px;color:#444;font-family:"微软雅黑",Arial;background:#fff;padding:50px;}
+a{color:#444;text-decoration: none;}
+a:hover{color:#065BC2;text-decoration: none;}
+.clear{clear:both;}
+img{border:none;vertical-align: middle;}
+ul{list-style: none;}
+.mwui-switch-btn{
+	width:84px;  
+	display:block;
+	padding:1px;
+	background:#3B75FD;
+	overflow:hidden;
+	margin-bottom:5px;
+	border:1px solid #2E58C1;
+	border-radius:18px;
+	cursor: pointer;
+}
+.mwui-switch-btn span{
+	width:32px;
+	font-size:14px;
+	height:18px;
+	padding:4px 5px 2px 5px;
+	display:block; 
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#f6f6f6,endColorstr=#eeeeee,grandientType=1);
+	background:-webkit-gradient(linear, 0 0, 0 100%, from(#f6f6f6), to(#eeeeee));
+	background:-moz-linear-gradient(top, #f6f6f6, #eeeeee);
+	border-radius:18px;
+	float:left;
+	color:#3B75FD;
+	text-align:center; 
+} 
+.mwui-switch-btn:hover span{
+	background:#fff;
+}
+.mwui-switch-btn span.off{float:right;'background-color':'#d2d2d2'}

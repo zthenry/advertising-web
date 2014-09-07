@@ -1,0 +1,124 @@
+<%@ page language="java" pageEncoding="utf-8" contentType="text/html;charset=utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>角色管理</title>
+<jsp:include page="/page/base.jsp"></jsp:include>
+<script type="text/javascript">
+$(document).ready(function() {
+    tishi();
+    $("#checkAll").click(function() {
+		$('input[name="oids"]').attr("checked",this.checked); 
+	});
+	var $oids = $("input[name='oids']");
+	$oids.click(function(){
+		$("#checkAll").attr("checked",$oids.length == $("input[name='oids']:checked").length ? true : false);
+	});
+});
+function tishi(){
+	if(${param.flag}!=null){
+		if('${param.flag}'=='0'){
+			Boxy.alert('操作失败');
+		}
+		if('${param.flag}'=='1'){
+			Boxy.alert('操作成功');
+		}	
+	}
+}
+function setInput(id, name){
+	$("#rolesModal #id").val(id);
+	$("#rolesModal #name").val(name);
+}
+var real_del=function(id){
+	self.location.href = "${contextPath }/roles/delete?id="+id;
+}
+</script>
+</head>
+
+<body>
+<jsp:include page="/page/confirm.jsp"></jsp:include>
+<div class="content">
+    <ul class="breadcrumb">
+        <li>权限管理 》 角色管理</li>
+    </ul>
+    <div class="container-fluid">
+		<div class="row-fluid">
+		    <div class="block span4">
+		        <a href="#tablewidget" class="block-heading" >角色管理</a>
+		        <div id="tablewidget" class="block-body collapse in">
+		            <br>
+		            <p><a class="btn btn-primary" data-toggle="modal" data-target="#rolesModal" onclick="setInput(null, '')">新建角色</a></p>
+		            <table class="table">
+		              <tbody>
+		              <c:forEach var="roles" items="${rolesList}" varStatus="status">
+		                <tr>
+		                  <td align="center" width="50%"><span class="tablecontent">${roles.name }</span></td>
+		                  <td align="center">
+		                  <a class="btn btn-mini" data-toggle="modal" data-target="#rolesModal" onclick="setInput(${roles.id }, '${roles.name }')">编辑</a>
+						  <a class="btn btn-mini btn-danger" href="javascript:;" onclick="del('${roles.id }')">删除</a>
+						  <a class="btn btn-mini" href="${contextPath }/roles/listOperations?id=${roles.id }">权限</a>
+		                  </td>
+		                </tr>
+		              </c:forEach>
+		              </tbody>
+		            </table>
+		            
+		        </div>
+		    </div>
+		    <div id="operationsDiv" class="span8">
+		    	<form action="${contextPath }/roles/assignOperations" method="post">
+		    	<input type="hidden" name="roleId" value="${roleId }"/>
+		    	<c:forEach var="manageModule" items="${manageModuleList}" varStatus="status">
+					<div class="block">
+						<a href="#tablewidget${manageModule.id }" class="block-heading" data-toggle="collapse">${manageModule.name }</a>
+						<div id="tablewidget${manageModule.id }" class="block-body collapse in">
+							<table class="table" border="0">
+							    <tr>
+							    	<c:forEach var="operations" items="${manageModule.operationsList}" varStatus="status1">
+										<td align="center" width="10"><input type="checkbox" name="oids" value="${operations.id }" 
+										<c:set var="str" value="${oidList }"/>
+										<c:forEach var="oper" items="${operationsList}" varStatus="status2">
+											<c:if test="${oper.id==operations.id }">checked="checked"</c:if>
+										</c:forEach> />
+										&nbsp;${operations.name }</td>
+									</c:forEach>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</c:forEach>
+				<c:if test="${manageModuleList!=null}">
+					<div class="">
+					    <center><input type="checkbox" id="checkAll"/>全选&nbsp;<button type="submit" class="btn btn-primary">保存</button></center>
+					</div>
+				</c:if>
+				</form>
+	    	</div>
+		</div>
+	</div>
+</div>
+<div id="rolesModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">编辑角色</h3>
+  </div>
+  <form action="${contextPath }/roles/edit" method="post">
+  <input type="hidden" name="id" id="id"/>
+  <div class="modal-body">
+      <table id="sample-table-1" class="table">
+        <tr>
+	      <td>角色名称</td>
+	      <td><input type="text" name="name" id="name" required/>&nbsp;</td>
+	    </tr>
+      </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+    <button class="btn btn-primary">保存</button>
+  </div>
+  </form>
+</div>
+</body>
+</html>
